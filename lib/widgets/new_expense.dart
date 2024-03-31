@@ -12,10 +12,12 @@ class NewExpense extends StatefulWidget {
 class _NewExpenseState extends State<NewExpense> {
 // 유의점 : 텍스트 편집 컨트롤러를 생성할 때 위젯이 필요없으면 플러터에게 컨트롤러를 지워라고 해야한다 .
   final _titleController = TextEditingController();
+  final _amountController = TextEditingController();
 
   @override
   void dispose() {
     _titleController.dispose();
+    _amountController.dispose();
     super.dispose();
   }
 
@@ -29,15 +31,33 @@ class _NewExpenseState extends State<NewExpense> {
             controller:
                 _titleController, // 택스트 필드의 값이 바뀔 때마다 트리거가 되는 함수 ex 키를 눌러 하나의 함수르 변경하면 문자열 값을 받고 텍스트 필드에 입력함
             maxLength: 50,
-            decoration: const InputDecoration(label: Text('Title')),
+            decoration: const InputDecoration(
+              label: Text('Title'),
+            ),
+          ),
+          TextField(
+            controller: _amountController, //같은 텍스트 컨트롤러
+            keyboardType: TextInputType.number,
+            decoration: const InputDecoration(
+              prefixText: '\$ ',
+              label: Text('Amount'),
+            ),
           ),
           Row(
             children: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text('Cancel'),
+              ),
               ElevatedButton(
-                  onPressed: () {
-                    print(_titleController.text);
-                  },
-                  child: const Text('Save Expense')),
+                onPressed: () {
+                  print(_titleController.text);
+                  print(_amountController.text);
+                },
+                child: const Text('Save Expense'),
+              ),
             ],
           )
         ],
