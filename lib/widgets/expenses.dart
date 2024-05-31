@@ -38,14 +38,51 @@ class _ExpensesState extends State<Expenses> {
     );
   }
 
+// 항목 추가
   void _addExpense(Expense expense) {
     setState(() {
       _registeredExpenses.add(expense);
     });
   }
 
+  //항목 삭제
+  void _removeExpense(Expense expense) {
+    final expenseIndex = _registeredExpenses.indexOf(expense);
+    setState(() {
+      _registeredExpenses.remove(expense);
+    });
+    ScaffoldMessenger.of(context).clearSnackBars(); // 새로운 스낵바가 생기면 기존 스낵바 바로 내리고 새로운 스낵바 올리기 
+    ScaffoldMessenger.of(context).showSnackBar( //스낵바 보여주기 
+      SnackBar(
+        duration: const Duration(seconds: 3), //몇초 동안 있을 것인가
+        content: const Text('지출 삭제'), // 스낵바가 생성되면서 표시할 메시지
+        action: SnackBarAction(
+          // 스낵바가 나왔을떼 추가로 할수 있는 엑션
+          label: '취소',
+          onPressed: () {
+            setState(() {
+              //삭제를 취소 했으니 삭제했던 요소를 다시 추가
+              _registeredExpenses.insert(expenseIndex, expense);
+            });
+          },
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    Widget mainContent = const Center(
+      child: Text('지출 내역 없음'),
+    );
+
+    if (_registeredExpenses.isNotEmpty) {
+      mainContent = ExpensesList(
+        expenses: _registeredExpenses,
+        onRemoveExpense: _removeExpense,
+      );
+    }
+    ;
     return Scaffold(
       appBar: AppBar(
         title: const Text("flutter ExpenseTracker"),
@@ -60,7 +97,7 @@ class _ExpensesState extends State<Expenses> {
         children: [
           const Text('이건 차트 '),
           Expanded(
-            child: ExpensesList(expenses: _registeredExpenses),
+            child: mainContent,
           ),
         ],
       ),
