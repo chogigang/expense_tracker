@@ -24,7 +24,9 @@ if (flutterVersionName == null) {
 
 android {
     namespace "com.example.expense_tracker"
-    compileSdkVersion flutter.compileSdkVersion
+    // Flutter Gradle 플러그인이 local.properties를 기반으로 버전을 자동으로 설정합니다.
+    compileSdkVersion 34
+    //compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
     compileOptions {
@@ -41,10 +43,8 @@ android {
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.example.expense_tracker"
-        // You can update the following values to match your application needs.
-        // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
+        // minSdkVersion과 targetSdkVersion도 Flutter 플러그인이 자동으로 관리합니다.
         minSdkVersion flutter.minSdkVersion
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
@@ -54,7 +54,7 @@ android {
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
+            // By default, flutter builds in release mode use a temporary debug signing key.
             signingConfig signingConfigs.debug
         }
     }
@@ -64,4 +64,6 @@ flutter {
     source '../..'
 }
 
-dependencies {}
+dependencies {
+    // 필요한 경우 여기에 안드로이드 의존성을 추가할 수 있습니다.
+}

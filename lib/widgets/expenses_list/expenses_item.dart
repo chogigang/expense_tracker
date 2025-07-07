@@ -14,8 +14,12 @@ class ExpenseItem extends StatelessWidget {
           vertical: 16,
         ),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start, //가로축 정렬
           children: [
-            Text(expense.title),
+            Text(
+              expense.title,
+              style: Theme.of(context).textTheme.titleLarge,
+            ), //main에서 설정한 titleLarge 에 설정된 설정을 불러온다.
             const SizedBox(height: 4),
             Row(
               children: [
