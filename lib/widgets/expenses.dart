@@ -1,6 +1,8 @@
+import 'package:expense_tracker/widgets/chart/chart.dart';
 import 'package:expense_tracker/widgets/expenses_list/expenses_list.dart';
 import 'package:expense_tracker/models/expense.dart';
 import 'package:expense_tracker/widgets/new_expense.dart';
+import 'package:expense_tracker/widgets/chart/chart.dart';
 import 'package:flutter/material.dart';
 
 class Expenses extends StatefulWidget {
@@ -51,8 +53,10 @@ class _ExpensesState extends State<Expenses> {
     setState(() {
       _registeredExpenses.remove(expense);
     });
-    ScaffoldMessenger.of(context).clearSnackBars(); // 새로운 스낵바가 생기면 기존 스낵바 바로 내리고 새로운 스낵바 올리기 
-    ScaffoldMessenger.of(context).showSnackBar( //스낵바 보여주기 
+    ScaffoldMessenger.of(context)
+        .clearSnackBars(); // 새로운 스낵바가 생기면 기존 스낵바 바로 내리고 새로운 스낵바 올리기
+    ScaffoldMessenger.of(context).showSnackBar(
+      //스낵바 보여주기
       SnackBar(
         duration: const Duration(seconds: 3), //몇초 동안 있을 것인가
         content: const Text('지출 삭제'), // 스낵바가 생성되면서 표시할 메시지
@@ -95,7 +99,7 @@ class _ExpensesState extends State<Expenses> {
       ),
       body: Column(
         children: [
-          const Text('이건 차트 '),
+          Chart(expenses: _registeredExpenses),
           Expanded(
             child: mainContent,
           ),
