@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
+//import 'package:flutter/services.dart'; // 세로 모드를 사용을 위한 임포트
 import 'package:expense_tracker/widgets/expenses.dart';
 
 void main() {
+  //세로 모드 고정
+  // WidgetsFlutterBinding.ensureInitialized();
+  // SystemChrome.setPreferredOrientations([
+  //   DeviceOrientation.portraitUp, // 세로 모드 고정
+  // ]).then((fn) {
+  //   runApp(const MyApp());
+  // });
+
   runApp(const MyApp());
 }
 
@@ -57,11 +66,12 @@ class MyApp extends StatelessWidget {
               vertical:
                   8), //위젯 여백    symmetric 사용시 수평 수직 설정  horizontal 수평  vertical 수직
         ),
+        // 이매채는 copyWith이 없음
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
             backgroundColor: KColorScheme.primaryContainer,
           ),
-        ), // 이매채는 copyWith이 없음
+        ),
         textTheme: ThemeData().textTheme.copyWith(
               titleLarge: TextStyle(
                 fontWeight: FontWeight.bold, //nomal ,bold 두껍게

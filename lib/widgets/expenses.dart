@@ -75,7 +75,12 @@ class _ExpensesState extends State<Expenses> {
   }
 
   @override
+  //플러터가 시뮬레이터 기종의 가로 전환 세로 전환을 할때 빌드 메서드를 다시 실행 해서 정보를 다시 반환할수 있음
   Widget build(BuildContext context) {
+    final width =
+        MediaQuery.of(context).size.width; // 앱의 넓이를 알수있는 함수 MediaQuery
+    final height =
+        MediaQuery.of(context).size.height; //앱의 높이를 알수 있는 함수 MediaQuery
     Widget mainContent = const Center(
       child: Text('지출 내역 없음'),
     );
@@ -87,6 +92,7 @@ class _ExpensesState extends State<Expenses> {
       );
     }
     ;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("flutter ExpenseTracker"),
@@ -97,14 +103,35 @@ class _ExpensesState extends State<Expenses> {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          Chart(expenses: _registeredExpenses),
-          Expanded(
-            child: mainContent,
-          ),
-        ],
-      ),
+      body: width < 600 // 넓이가 600 아하면 이면 1번
+          ? Column(
+              children: [
+                Chart(expenses: _registeredExpenses),
+                Expanded(
+                  child: mainContent,
+                ),
+              ],
+            )
+          : Row(
+              //너비가 600보다 크면 행을 바꾼다.
+              children: [
+                Expanded(
+                  child: Chart(expenses: _registeredExpenses),
+                ),
+                Expanded(
+                  child: mainContent,
+                ),
+              ],
+            ),
     );
   }
 }
+
+
+/*
+기존 너비는 무한대로 설정을 했기때문에 
+서로 2가지의 위젯이 서로 무한대로 너비를 가져갈려고 하기때문에 어떻게 너비를 조정할지 flutter가 혼돈이와 출력을 안함
+이때 Expanded 가 퍼센테이지를 조정해  공간을 배정 해줌 
+
+
+ */
